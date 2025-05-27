@@ -1,9 +1,16 @@
 package com.lamdevin.PokemonCardServer.service;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import com.lamdevin.PokemonCardServer.models.PokemonCard;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,13 +24,41 @@ public class CardListService {
 
     public CardListService() {
         cardsJSON = new File(PATH_TO_JSON);
+        File defaults = new File(PATH_TO_DEFAULTS);
         cards = new ArrayList<>();
-        // read from JSON, update cards
+        readFromJSONFile(cardsJSON);
         if (cards.isEmpty()) {
             cardsJSON = new File(PATH_TO_DEFAULTS);
-            //read from defaults, update cards, write to json file
+            readFromJSONFile(defaults);
+            updateJSONFile();
         }
     }
 
+    private void readFromJSONFile(File jsonFile) {
+        Gson gson = new Gson();
+        try {
+            JsonReader jsonReader = new JsonReader(new FileReader(jsonFile));
+            PokemonCard[] cardArray = gson.fromJson(jsonReader, PokemonCard[].class);
+            cards = new ArrayList<>(Arrays.asList(cardArray));
+        } catch (FileNotFoundException e) {
+            System.out.println(jsonFile.getPath() + " not found.");
+        } catch (Exception e) {
+            System.out.println("Error reading from " + jsonFile.getPath());
+        }
+    }
 
+    private void updateJSONFile() {
+        Gson gson = new Gson();
+
+        try {
+            JsonWriter jsonWriter = new JsonWriter(new FileWriter(PATH_TO_JSON));
+            PokemonCard[] cardArray = cards.toArray(new PokemonCard[0]);
+            gson.toJson(cardArray, PokemonCard[].class, jsonWriter);
+            jsonWriter.flush();
+            jsonWriter.close();
+        } catch (Exception e) {
+            System.out.println("Error writing to " + PATH_TO_JSON);
+        }
+
+    }
 }
