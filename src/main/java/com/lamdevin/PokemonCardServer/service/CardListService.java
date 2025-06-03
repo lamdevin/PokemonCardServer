@@ -39,6 +39,16 @@ public class CardListService {
         return cards;
     }
 
+    public PokemonCard getCardFromId(long id) {
+        readFromJSONFile(cardsJSON);
+        for (PokemonCard card : cards) {
+            if (card.getId() == id) {
+                return card;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * Read card data from JSON file
