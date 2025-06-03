@@ -46,4 +46,17 @@ public class PokemonCardListController {
         return newCard;
     }
 
+    @PutMapping("/api/tokimon/edit/{id}")
+    public PokemonCard updateCard(@PathVariable long id, @RequestBody PokemonCard newCard, HttpServletResponse response) {
+        PokemonCard card = cardListService.updateCard(id, newCard);
+        if (card == null) {
+            try {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Tokimon Card ID " + id + " not found.");
+            } catch (IOException e) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
+        }
+        return card;
+    }
+
 }
