@@ -59,4 +59,19 @@ public class PokemonCardListController {
         return card;
     }
 
+    @DeleteMapping("/api/tokimon/{id}")
+    public PokemonCard deleteCard(@PathVariable long id, HttpServletResponse response) {
+        PokemonCard deletedCard = cardListService.deleteCard(id);
+        if (deletedCard == null) {
+            try {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Tokimon Card ID " + id + " not found.");
+            } catch (IOException e) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        }
+        return deletedCard;
+    }
+
 }
