@@ -3,9 +3,7 @@ package com.lamdevin.PokemonCardServer.controllers;
 import com.lamdevin.PokemonCardServer.models.PokemonCard;
 import com.lamdevin.PokemonCardServer.service.CardListService;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,6 +35,15 @@ public class PokemonCardListController {
         return card;
     }
 
-
+    @PostMapping("/api/tokimon/add")
+    public PokemonCard addCard(@RequestBody PokemonCard newCard, HttpServletResponse response) {
+        while (cardListService.getCardFromId(nextId.get()) != null) {
+            nextId.incrementAndGet();
+        }
+        newCard.setId(nextId.getAndIncrement());
+        cardListService.addCard(newCard);
+        response.setStatus(HttpServletResponse.SC_CREATED);
+        return newCard;
+    }
 
 }
