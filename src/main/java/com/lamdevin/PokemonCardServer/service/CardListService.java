@@ -34,6 +34,16 @@ public class CardListService {
         }
     }
 
+    public List<PokemonCard> getAllCards() {
+        readFromJSONFile(cardsJSON);
+        return cards;
+    }
+
+
+    /**
+     * Read card data from JSON file
+     * @param jsonFile JSON file of card data
+     */
     private void readFromJSONFile(File jsonFile) {
         Gson gson = new Gson();
         try {
@@ -47,6 +57,9 @@ public class CardListService {
         }
     }
 
+    /**
+     * Write card data to JSON file
+     */
     private void updateJSONFile() {
         Gson gson = new Gson();
 
