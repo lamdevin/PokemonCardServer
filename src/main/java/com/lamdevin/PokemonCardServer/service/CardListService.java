@@ -54,6 +54,21 @@ public class CardListService {
         updateJSONFile();
     }
 
+    public PokemonCard updateCard(long id, PokemonCard newCard) {
+        PokemonCard pc = getCardFromId(id);
+        if (pc == null) return null;
+
+        pc.setName(newCard.getName());
+        pc.setType(newCard.getType());
+        pc.setRarity(newCard.getRarity());
+        pc.setPicture_url(newCard.getPicture_url());
+        pc.setHp(newCard.getHp());
+
+        updateJSONFile();
+
+        return pc;
+    }
+
 
     /**
      * Read card data from JSON file
