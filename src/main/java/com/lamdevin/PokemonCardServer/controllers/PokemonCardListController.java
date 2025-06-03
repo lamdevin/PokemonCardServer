@@ -18,12 +18,12 @@ public class PokemonCardListController {
     private AtomicLong nextId;
     private CardListService cardListService;
 
-    @GetMapping("/api/tokimon/all")
+    @GetMapping("/api/pokemon/all")
     public List<PokemonCard> getCards() {
         return cardListService.getAllCards();
     }
 
-    @GetMapping("/api/tokimon/{id}")
+    @GetMapping("/api/pokemon/{id}")
     public PokemonCard getCardFromId(@PathVariable long id, HttpServletResponse response) {
         PokemonCard card = cardListService.getCardFromId(id);
         if (card == null) {
@@ -36,7 +36,7 @@ public class PokemonCardListController {
         return card;
     }
 
-    @PostMapping("/api/tokimon/add")
+    @PostMapping("/api/pokemon/add")
     public PokemonCard addCard(@RequestBody PokemonCard newCard, HttpServletResponse response) {
         while (cardListService.getCardFromId(nextId.get()) != null) {
             nextId.incrementAndGet();
@@ -47,7 +47,7 @@ public class PokemonCardListController {
         return newCard;
     }
 
-    @PutMapping("/api/tokimon/edit/{id}")
+    @PutMapping("/api/pokemon/edit/{id}")
     public PokemonCard updateCard(@PathVariable long id, @RequestBody PokemonCard newCard, HttpServletResponse response) {
         PokemonCard card = cardListService.updateCard(id, newCard);
         if (card == null) {
@@ -60,7 +60,7 @@ public class PokemonCardListController {
         return card;
     }
 
-    @DeleteMapping("/api/tokimon/{id}")
+    @DeleteMapping("/api/pokemon/{id}")
     public PokemonCard deleteCard(@PathVariable long id, HttpServletResponse response) {
         PokemonCard deletedCard = cardListService.deleteCard(id);
         if (deletedCard == null) {
