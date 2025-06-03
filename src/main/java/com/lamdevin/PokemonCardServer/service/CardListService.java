@@ -49,6 +49,11 @@ public class CardListService {
         return null;
     }
 
+    public void addCard(PokemonCard newCard) {
+        cards.add(newCard);
+        updateJSONFile();
+    }
+
 
     /**
      * Read card data from JSON file
