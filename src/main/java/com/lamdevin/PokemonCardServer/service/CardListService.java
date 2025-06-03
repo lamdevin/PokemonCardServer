@@ -69,6 +69,18 @@ public class CardListService {
         return pc;
     }
 
+    public PokemonCard deleteCard(long id) {
+        for (int i = 0; i < cards.size(); i++) {
+            if (cards.get(i).getId() == id) {
+                PokemonCard pc = cards.get(i);
+                cards.remove(i);
+                updateJSONFile();
+                return pc;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * Read card data from JSON file
