@@ -4,7 +4,7 @@
     "name": "Charmander",
     "type": "Fire",
     "rarity": 5,
-    "pictureURL": "https://www.serebii.net/pokemon/art/004.png",
+    "picture_url": "https://www.serebii.net/pokemon/art/004.png",
     "hp": 100
   },
   {
@@ -12,7 +12,7 @@
     "name": "Squirtle",
     "type": "Water",
     "rarity": 7,
-    "pictureURL": "https://www.serebii.net/pokemon/art/007.png",
+    "picture_url": "https://www.serebii.net/pokemon/art/007.png",
     "hp": 20
   },
   {
@@ -20,7 +20,7 @@
     "name": "Bulbasaur",
     "type": "Grass",
     "rarity": 8,
-    "pictureURL": "https://www.serebii.net/pokemon/art/001.png",
+    "picture_url": "https://www.serebii.net/pokemon/art/001.png",
     "hp": 30
   },
   {
@@ -28,7 +28,7 @@
     "name": "Caterpie",
     "type": "Bug",
     "rarity": 3,
-    "pictureURL": "https://www.serebii.net/pokemon/art/010.png",
+    "picture_url": "https://www.serebii.net/pokemon/art/010.png",
     "hp": 40
   },
   {
@@ -36,7 +36,7 @@
     "name": "Oddish",
     "type": "Grass",
     "rarity": 2,
-    "pictureURL": "https://www.serebii.net/pokemon/art/043.png",
+    "picture_url": "https://www.serebii.net/pokemon/art/043.png",
     "hp": 60
   },
   {
@@ -44,7 +44,7 @@
     "name": "Pikachu",
     "type": "Electric",
     "rarity": 8,
-    "pictureURL": "https://www.serebii.net/pokemon/art/025.png",
+    "picture_url": "https://www.serebii.net/pokemon/art/025.png",
     "hp": 35
   },
   {
@@ -52,7 +52,7 @@
     "name": "Psyduck",
     "type": "Water",
     "rarity": 5,
-    "pictureURL": "https://www.serebii.net/pokemon/art/054.png",
+    "picture_url": "https://www.serebii.net/pokemon/art/054.png",
     "hp": 55
   },
   {
@@ -60,7 +60,7 @@
     "name": "Diglett",
     "type": "Ground",
     "rarity": 2,
-    "pictureURL": "https://www.serebii.net/pokemon/art/050.png",
+    "picture_url": "https://www.serebii.net/pokemon/art/050.png",
     "hp": 85
   },
   {
@@ -68,7 +68,7 @@
     "name": "Sudowoodo",
     "type": "Rock",
     "rarity": 5,
-    "pictureURL": "https://www.serebii.net/pokemon/art/185.png",
+    "picture_url": "https://www.serebii.net/pokemon/art/185.png",
     "hp": 81
   },
   {
@@ -76,7 +76,7 @@
     "name": "Munchlax",
     "type": "Normal",
     "rarity": 9,
-    "pictureURL": "https://www.serebii.net/pokemon/art/446.png",
+    "picture_url": "https://www.serebii.net/pokemon/art/446.png",
     "hp": 91
   },
   {
@@ -84,7 +84,7 @@
     "name": "Snorlax",
     "type": "Normal",
     "rarity": 4,
-    "pictureURL": "https://www.serebii.net/pokemon/art/143.png",
+    "picture_url": "https://www.serebii.net/pokemon/art/143.png",
     "hp": 61
   }
 ]
