@@ -133,4 +133,36 @@ class PokemonCardListControllerTest {
                 );
 
     }
+
+    @Test
+    void testDeleteCard() throws Exception {
+        PokemonCard card = new PokemonCard();
+        card.setName("Poke1");
+        card.setType("Fire");
+        card.setRarity(5);
+        card.setPicture_url("url.com");
+        card.setHp(100);
+
+        mockMvc.perform(
+                        post("/api/pokemon/add")
+                                .content(new ObjectMapper().writeValueAsString(card))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated()
+                );
+        // get assigned id
+        long id = pokemonCardListController.getNextId() - 1;
+        card.setId(id);
+
+        mockMvc.perform(
+                        delete("/api/pokemon/"+id))
+                .andExpect(status().isNoContent()
+                );
+
+        // delete again should be 404
+        mockMvc.perform(
+                        delete("/api/pokemon/"+id))
+                .andExpect(status().isNotFound()
+                );
+    }
 }
