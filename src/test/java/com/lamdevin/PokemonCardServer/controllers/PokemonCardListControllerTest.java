@@ -8,11 +8,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -40,5 +42,60 @@ class PokemonCardListControllerTest {
                         .andExpect(status().isOk())
                         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                         .andExpect(content().json(cardsString));
+    }
+
+    @Test
+    void testAddAndGetCardsFromId() throws Exception {
+        PokemonCard c1 = new PokemonCard();
+        c1.setName("Toki1");
+        c1.setType("Fire");
+        c1.setRarity(5);
+        c1.setPicture_url("url.com");
+        c1.setHp(100);
+
+        PokemonCard c2 = new PokemonCard();
+        c2.setName("Toki2");
+        c2.setType("Water");
+        c2.setRarity(6);
+        c2.setPicture_url("url.ca");
+        c2.setHp(50);
+
+        MvcResult result1 = mockMvc.perform(
+                        post("/api/pokemon/add")
+                                .content(new ObjectMapper().writeValueAsString(c1))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andReturn();
+        // get assigned id
+        long id1 = pokemonCardListController.getNextId() - 1;
+        c1.setId(id1);
+        String c1String = new ObjectMapper().writeValueAsString(c1);
+        assertEquals(c1String,result1.getResponse().getContentAsString());
+
+        MvcResult result2 = mockMvc.perform(
+                        post("/api/pokemon/add")
+                                .content(new ObjectMapper().writeValueAsString(c2))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andReturn();
+        // get assigned id
+        long id2 = pokemonCardListController.getNextId() - 1;
+        c2.setId(id2);
+        String c2String = new ObjectMapper().writeValueAsString(c2);
+        assertEquals(c2String,result2.getResponse().getContentAsString());
+
+        mockMvc.perform(
+                        get("/api/pokemon/" + id1))
+                .andExpect(status().isOk())
+                .andExpect(content().json(c1String)
+                );
+
+        mockMvc.perform(
+                        get("/api/pokemon/" + id2))
+                .andExpect(status().isOk())
+                .andExpect(content().json(c2String)
+                );
     }
 }

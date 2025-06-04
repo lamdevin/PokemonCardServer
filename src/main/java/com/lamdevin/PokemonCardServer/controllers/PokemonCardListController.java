@@ -80,4 +80,8 @@ public class PokemonCardListController {
         cardListService = new CardListService();
         nextId = new AtomicLong(1);
     }
+
+    public long getNextId() {
+        return nextId.get();
+    }
 }
