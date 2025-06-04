@@ -165,4 +165,29 @@ class PokemonCardListControllerTest {
                 .andExpect(status().isNotFound()
                 );
     }
+
+    @Test
+    void test404Responses() throws Exception {
+        long id = 987654321;
+        // delete card
+        mockMvc.perform(delete("/api/pokemon/"+id));
+
+        // test 404
+        mockMvc.perform(
+                        get("/api/pokemon/"+id))
+                .andExpect(status().isNotFound()
+                );
+        mockMvc.perform(
+                        put("/api/pokemon/edit/"+id)
+                                .content("{}")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound()
+                );
+        mockMvc.perform(
+                        delete("/api/pokemon/"+id))
+                .andExpect(status().isNotFound()
+                );
+
+    }
 }
