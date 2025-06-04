@@ -52,7 +52,7 @@ public class PokemonCardListController {
         PokemonCard card = cardListService.updateCard(id, newCard);
         if (card == null) {
             try {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Tokimon Card ID " + id + " not found.");
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Pokemon Card ID " + id + " not found.");
             } catch (IOException e) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
@@ -65,7 +65,7 @@ public class PokemonCardListController {
         PokemonCard deletedCard = cardListService.deleteCard(id);
         if (deletedCard == null) {
             try {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Tokimon Card ID " + id + " not found.");
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Pokemon Card ID " + id + " not found.");
             } catch (IOException e) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
