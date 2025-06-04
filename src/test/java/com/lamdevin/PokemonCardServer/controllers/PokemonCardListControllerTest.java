@@ -13,8 +13,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -97,5 +96,41 @@ class PokemonCardListControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(c2String)
                 );
+    }
+
+    @Test
+    void testUpdateCard() throws Exception {
+        PokemonCard card = new PokemonCard();
+        card.setName("Poke1");
+        card.setType("Fire");
+        card.setRarity(5);
+        card.setPicture_url("url.com");
+        card.setHp(100);
+
+        mockMvc.perform(
+                        post("/api/pokemon/add")
+                                .content(new ObjectMapper().writeValueAsString(card))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated()
+                );
+        // get assigned id
+        long id = pokemonCardListController.getNextId() - 1;
+        card.setId(id);
+
+        // change some attributes
+        card.setName("Poke2");
+        card.setType("Water");
+        card.setRarity(1);
+        card.setHp(5);
+
+        mockMvc.perform(
+                        put("/api/pokemon/edit/"+id)
+                                .content(new ObjectMapper().writeValueAsString(card))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andExpect(content().json(new ObjectMapper().writeValueAsString(card))
+                );
+
     }
 }
