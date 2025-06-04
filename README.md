@@ -24,3 +24,19 @@ A RESTful backend server for tracking and managing Pokémon cards, built with Ja
 | Persistence | JSON file (custom I/O)|
 | Build Tool  | Maven                 |
 | API Testing | Postman / curl        |
+
+## Methods
+### Get all cards
+GET /api/pokemon/all
+
+### Get card by ID
+GET /api/pokemon/{id}
+
+### Update card
+POST /api/pokemon/add
+
+### Edit card
+PUT /api/pokemon/edit/{id}
+
+### Delete card
+DELETE /api/pokemon/{id}
