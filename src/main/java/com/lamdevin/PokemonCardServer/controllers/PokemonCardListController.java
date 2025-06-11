@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * REST Controller for Pokemon Card List
  */
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class PokemonCardListController {
     private AtomicLong nextId;

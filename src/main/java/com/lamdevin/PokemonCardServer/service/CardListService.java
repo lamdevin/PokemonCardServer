@@ -17,7 +17,7 @@ import java.util.List;
  * Manages a list of Pokemon Cards.
  */
 public class CardListService {
-    private static final String PATH_TO_JSON = "data/cards.json";
+    private static final String PATH_TO_JSON = "/tmp/cards.json";
     private static final String PATH_TO_DEFAULTS = "src/main/resources/static/defaults.json";
     private File cardsJSON;
     private List<PokemonCard> cards;
