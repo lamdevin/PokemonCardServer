@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @CrossOrigin(origins = {
         "http://localhost:4200",
-        "https://lamdevin.github.io/pokemon-card-client/"
+        "https://lamdevin.github.io"
 })
 @RestController
 public class PokemonCardListController {
