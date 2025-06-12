@@ -13,7 +13,6 @@ RUN ./mvnw dependency:go-offline
 
 # Copy the rest of the project
 COPY src ./src
-COPY cards.json ./cards.json
 
 # Build the project
 RUN ./mvnw package -DskipTests

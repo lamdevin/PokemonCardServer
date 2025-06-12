@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class CardListService {
     private static final String PATH_TO_JSON = "/tmp/cards.json";
-    private static final String PATH_TO_DEFAULTS = "src/main/resources/static/defaults.json";
+    private static final String PATH_TO_DEFAULTS = "src/main/resources/data/defaults.json";
     private File cardsJSON;
     private List<PokemonCard> cards;
 
