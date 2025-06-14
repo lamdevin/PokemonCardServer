@@ -1,9 +1,14 @@
 package com.lamdevin.PokemonCardServer.models;
 
+import jakarta.persistence.*;
+
 /**
  * Represents a Pokemon Card, each with an ID, name, type, rarity, picture URL and HP (Health Points)
  */
+@Entity
 public class PokemonCard {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String type;
