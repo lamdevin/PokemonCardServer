@@ -1,6 +1,5 @@
 [
   {
-    "id": 1,
     "name": "Charmander",
     "type": "Fire",
     "rarity": 5,
@@ -8,7 +7,6 @@
     "hp": 100
   },
   {
-    "id": 2,
     "name": "Squirtle",
     "type": "Water",
     "rarity": 7,
@@ -16,7 +14,6 @@
     "hp": 20
   },
   {
-    "id": 3,
     "name": "Bulbasaur",
     "type": "Grass",
     "rarity": 8,
@@ -24,7 +21,6 @@
     "hp": 30
   },
   {
-    "id": 4,
     "name": "Caterpie",
     "type": "Bug",
     "rarity": 3,
@@ -32,7 +28,6 @@
     "hp": 40
   },
   {
-    "id": 5,
     "name": "Oddish",
     "type": "Grass",
     "rarity": 2,
@@ -40,7 +35,6 @@
     "hp": 60
   },
   {
-    "id": 6,
     "name": "Pikachu",
     "type": "Electric",
     "rarity": 8,
@@ -48,7 +42,6 @@
     "hp": 35
   },
   {
-    "id": 7,
     "name": "Psyduck",
     "type": "Water",
     "rarity": 5,
@@ -56,7 +49,6 @@
     "hp": 55
   },
   {
-    "id": 8,
     "name": "Diglett",
     "type": "Ground",
     "rarity": 2,
@@ -64,7 +56,6 @@
     "hp": 85
   },
   {
-    "id": 9,
     "name": "Sudowoodo",
     "type": "Rock",
     "rarity": 5,
@@ -72,7 +63,6 @@
     "hp": 81
   },
   {
-    "id": 10,
     "name": "Munchlax",
     "type": "Normal",
     "rarity": 9,
@@ -80,7 +70,6 @@
     "hp": 91
   },
   {
-    "id": 11,
     "name": "Snorlax",
     "type": "Normal",
     "rarity": 4,
