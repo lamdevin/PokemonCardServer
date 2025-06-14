@@ -2,13 +2,12 @@ package com.lamdevin.PokemonCardServer.controllers;
 
 import com.lamdevin.PokemonCardServer.models.PokemonCard;
 import com.lamdevin.PokemonCardServer.service.CardListService;
-import jakarta.annotation.PostConstruct;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * REST Controller for Pokemon Card List
@@ -19,8 +18,11 @@ import java.util.concurrent.atomic.AtomicLong;
 })
 @RestController
 public class PokemonCardListController {
-    private AtomicLong nextId;
-    private CardListService cardListService;
+    private final CardListService cardListService;
+
+    public PokemonCardListController(CardListService cardListService) {
+        this.cardListService = cardListService;
+    }
 
     @GetMapping("/api/pokemon/all")
     public List<PokemonCard> getCards() {
@@ -28,64 +30,33 @@ public class PokemonCardListController {
     }
 
     @GetMapping("/api/pokemon/{id}")
-    public PokemonCard getCardFromId(@PathVariable long id, HttpServletResponse response) {
-        PokemonCard card = cardListService.getCardFromId(id);
-        if (card == null) {
-            try {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Pokemon Card ID " + id + " not found.");
-            } catch (IOException e) {
-                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            }
-        }
-        return card;
+    public PokemonCard getCardFromId(@PathVariable long id) {
+        return cardListService.getCardFromId(id);
     }
 
     @PostMapping("/api/pokemon/add")
     public PokemonCard addCard(@RequestBody PokemonCard newCard, HttpServletResponse response) {
-        while (cardListService.getCardFromId(nextId.get()) != null) {
-            nextId.incrementAndGet();
-        }
-        newCard.setId(nextId.getAndIncrement());
+        newCard.setId(0);
         cardListService.addCard(newCard);
         response.setStatus(HttpServletResponse.SC_CREATED);
         return newCard;
     }
 
     @PutMapping("/api/pokemon/edit/{id}")
-    public PokemonCard updateCard(@PathVariable long id, @RequestBody PokemonCard newCard, HttpServletResponse response) {
-        PokemonCard card = cardListService.updateCard(id, newCard);
-        if (card == null) {
-            try {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Pokemon Card ID " + id + " not found.");
-            } catch (IOException e) {
-                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            }
-        }
-        return card;
+    public PokemonCard updateCard(@PathVariable long id, @RequestBody PokemonCard newCard) {
+        return cardListService.updateCard(id, newCard);
     }
 
     @DeleteMapping("/api/pokemon/{id}")
-    public PokemonCard deleteCard(@PathVariable long id, HttpServletResponse response) {
-        PokemonCard deletedCard = cardListService.deleteCard(id);
-        if (deletedCard == null) {
-            try {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Pokemon Card ID " + id + " not found.");
-            } catch (IOException e) {
-                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            }
-        } else {
-            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-        }
-        return deletedCard;
+    public PokemonCard deleteCard(@PathVariable long id) {
+        return cardListService.deleteCard(id);
     }
 
-    @PostConstruct
-    public void init() {
-        cardListService = new CardListService();
-        nextId = new AtomicLong(1);
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(EntityNotFoundException.class)
+    public String handleNotFound(EntityNotFoundException ex) {
+        return ex.getMessage();
     }
 
-    public long getNextId() {
-        return nextId.get();
-    }
+
 }

@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.lamdevin.PokemonCardServer.models.PokemonCard;
+import com.lamdevin.PokemonCardServer.repositories.CardRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,69 +19,48 @@ import java.util.List;
 /**
  * Manages a list of Pokemon Cards.
  */
+@Service
 public class CardListService {
+
+    private final CardRepository repository;
+
     private static final String PATH_TO_JSON = "/tmp/cards.json";
     private static final String PATH_TO_DEFAULTS = "src/main/resources/data/defaults.json";
     private File cardsJSON;
     private List<PokemonCard> cards;
 
-    public CardListService() {
-        cardsJSON = new File(PATH_TO_JSON);
-        File defaults = new File(PATH_TO_DEFAULTS);
-        cards = new ArrayList<>();
-        readFromJSONFile(cardsJSON);
-        if (cards.isEmpty()) {
-            cardsJSON = new File(PATH_TO_DEFAULTS);
-            readFromJSONFile(defaults);
-            updateJSONFile();
-        }
+    public CardListService(CardRepository repository) {
+        this.repository = repository;
     }
 
     public List<PokemonCard> getAllCards() {
-        readFromJSONFile(cardsJSON);
-        return cards;
+        return repository.findAll();
     }
 
     public PokemonCard getCardFromId(long id) {
-        readFromJSONFile(cardsJSON);
-        for (PokemonCard card : cards) {
-            if (card.getId() == id) {
-                return card;
-            }
-        }
-        return null;
+        return repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Pokemon Card with ID " + id + " not found."));
     }
 
     public void addCard(PokemonCard newCard) {
-        cards.add(newCard);
-        updateJSONFile();
+        repository.save(newCard);
     }
 
-    public PokemonCard updateCard(long id, PokemonCard newCard) {
+    public PokemonCard updateCard(long id, PokemonCard newCard) throws EntityNotFoundException {
         PokemonCard pc = getCardFromId(id);
-        if (pc == null) return null;
-
         pc.setName(newCard.getName());
         pc.setType(newCard.getType());
         pc.setRarity(newCard.getRarity());
         pc.setPicture_url(newCard.getPicture_url());
         pc.setHp(newCard.getHp());
 
-        updateJSONFile();
-
-        return pc;
+        return repository.save(pc);
     }
 
-    public PokemonCard deleteCard(long id) {
-        for (int i = 0; i < cards.size(); i++) {
-            if (cards.get(i).getId() == id) {
-                PokemonCard pc = cards.get(i);
-                cards.remove(i);
-                updateJSONFile();
-                return pc;
-            }
-        }
-        return null;
+    public PokemonCard deleteCard(long id) throws EntityNotFoundException {
+        PokemonCard card = getCardFromId(id);
+        repository.deleteById(id);
+        return card;
     }
 
 
