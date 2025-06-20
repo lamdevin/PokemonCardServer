@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -22,13 +23,18 @@ public class CardDataLoader implements CommandLineRunner {
         this.objectMapper = objectMapper;
     }
 
+    public void loadDefaults() throws IOException {
+        cardRepository.deleteAll();
+        InputStream inputStream = new ClassPathResource("data/defaults.json").getInputStream();
+        List<PokemonCard> cards = objectMapper.readValue(inputStream, new TypeReference<>() {});
+        cardRepository.saveAll(cards);
+        System.out.println("Loaded default cards.");
+    }
+
     @Override
     public void run(String... args) throws Exception {
-        if (cardRepository.count() == 0) {
-            InputStream inputStream = new ClassPathResource("data/defaults.json").getInputStream();
-            List<PokemonCard> cards = objectMapper.readValue(inputStream, new TypeReference<>() {});
-            cardRepository.saveAll(cards);
-            System.out.println("Loaded default cards.");
-        }
+        loadDefaults();
     }
+
+
 }

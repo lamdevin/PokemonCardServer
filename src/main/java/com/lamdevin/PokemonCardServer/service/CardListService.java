@@ -3,15 +3,13 @@ package com.lamdevin.PokemonCardServer.service;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.lamdevin.PokemonCardServer.CardDataLoader;
 import com.lamdevin.PokemonCardServer.models.PokemonCard;
 import com.lamdevin.PokemonCardServer.repositories.CardRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,14 +21,17 @@ import java.util.List;
 public class CardListService {
 
     private final CardRepository repository;
+    private final CardDataLoader cardDataLoader;
 
     private static final String PATH_TO_JSON = "/tmp/cards.json";
     private static final String PATH_TO_DEFAULTS = "src/main/resources/data/defaults.json";
+
     private File cardsJSON;
     private List<PokemonCard> cards;
 
-    public CardListService(CardRepository repository) {
+    public CardListService(CardRepository repository, CardDataLoader cardDataLoader) {
         this.repository = repository;
+        this.cardDataLoader = cardDataLoader;
     }
 
     public List<PokemonCard> getAllCards() {
@@ -61,6 +62,10 @@ public class CardListService {
         PokemonCard card = getCardFromId(id);
         repository.deleteById(id);
         return card;
+    }
+
+    public void resetToDefaults() throws IOException {
+        cardDataLoader.loadDefaults();
     }
 
 
