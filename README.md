@@ -1,29 +1,18 @@
-# 🎴 PokemonCardServer
+# Pokémon Card Tracker - Backend
 
-A RESTful backend server for tracking and managing Pokémon cards, built with Java and Spring Boot. This server provides a complete API to support a frontend client (Angular in development), allowing users to create, update, view, and delete Pokémon cards. Card data is persisted in a JSON file.
+A RESTful backend server for tracking and managing Pokémon cards, built with Java and Spring Boot. This server provides a complete API to support a frontend client, allowing users to create, update, view, and delete Pokémon cards. 
 
----
+Pokémon card data is managed using an H2 in-memory database.
 
-## 🚀 Features
+## Frontend Client (Angular)
+[https://github.com/lamdevin/pokemon-card-client](https://github.com/lamdevin/pokemon-card-client)
 
-- 🧩 View all Pokémon cards
-- ➕ Add new cards
-- 📝 Edit existing cards
-- ❌ Delete cards
-- 💾 Data saved in a local JSON file
-- ⚙️ RESTful API built with Spring Boot
 
----
+## Features
 
-## 🛠️ Tech Stack
-
-| Layer       | Tech                  |
-|-------------|-----------------------|
-| Language    | Java 17+              |
-| Backend     | Spring Boot           |
-| Persistence | JSON file (custom I/O)|
-| Build Tool  | Maven                 |
-| API Testing | Postman / curl        |
+- View, Add, Edit, Delete Pokemon Cards
+- RESTful API built with Spring Boot
+- Uses H2 database for storing cards
 
 ## Methods
 ### Get all cards
